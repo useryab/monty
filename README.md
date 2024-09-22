@@ -1,144 +1,121 @@
-# monty
+# 0x19. C - Stacks, Queues - LIFO, FIFO
+**About:** In this project, we created a simple interpreter for Monty ByteCodes. The interpreter reads a bytecode file and executes the bytecode commands.
+### The Monty language
+Monty 0.98 is a scripting language that is first compiled into Monty byte codes (Just like Python). It relies on a unique stack, with specific instructions to manipulate it. 
 
-## 0x19. C - Stacks, Queues - LIFO, FIFO
+### Monty byte code files
+Files containing Monty byte codes usually have the .m extension. Most of the industry uses this standard but it is not required by the specification of the language. There is not more than one instruction per line. There can be any number of spaces before or after the opcode and its argument: [examples](#Examples)
 
-**Stacks and Queues:**
+## Objectives:
+* To know what LIFO and FIFO mean
+* To know what a stack is, and when to use it
+* To know what a queue is, and when to use it
+* To know the common implementations of stacks and queues
+* To know the most common use cases of stacks and queues
+* To know the proper way to use global variables
 
-* **Stacks:** A stack is a linear data structure that follows the **LIFO (Last In First Out)** principle. Imagine a stack of plates: the last plate you put on is the first one you can take off. In C, stacks are often implemented using arrays or linked lists.
+### Resource:
+* [Difference between Stack and Queue Data Structures](https://www.geeksforgeeks.org/difference-between-stack-and-queue-data-structures/) || 
 
-* **Queues:** A queue is another linear data structure that follows the **FIFO (First In First Out)** principle. Think of a line at a store: the first person in line gets served first. In C, queues can also be implemented using arrays or linked lists.
+## General Requirements
+* Allowed editors: **vi**, **vim**, **emacs**
+* All files is compiled on **Ubuntu 20.04 LTS using gcc**, using the options **-Wall -Werror -Wextra -pedantic -std=gnu89**
+* All files ends with a new line
+* There is **README.md** file at the root of the **alx-low_level_programming**
+* Maximum of one global variable is allowed
+* No more than 5 functions per file
+* The C standard library is allowed
+* The prototypes of all the functions were included in the header file called monty.h
+* All the header files are include guarded
 
-**LIFO vs FIFO:**
-
-* **LIFO (Last In First Out):** With LIFO, the element that is added to the stack last (the "top" element) is the first one to be removed. This is like the plate analogy mentioned earlier.
-
-* **FIFO (First In First Out):** With FIFO, the element that is added to the queue first (the "front" element) is the first one to be removed. This is like the line at the store analogy.
-
-**Choosing Between Stacks and Queues:**
-
-The choice between using a stack or a queue depends on the specific needs of your program. Here are some general guidelines:
-
-* Use a stack when you need to follow a LIFO order, such as:
-    * Undo/redo functionality
-    * Function call history
-    * Expression evaluation (postfix notation)
-
-* Use a queue when you need to follow a FIFO order, such as:
-    * Processing tasks in a specific order
-    * Simulating a waiting line
-    * Breadth-first search algorithms
-
-
-* You can find resources online that explore implementing stacks and queues in C code, including examples. Search for "C stack implementation" or "C queue implementation" to find tutorials.
-* Here are some additional resources that you might find helpful:
-    * Stacks and Queues in C: [https://data-flair.training/blogs/stack-in-data-structure/](https://data-flair.training/blogs/stack-in-data-structure/)
-
-
-**Stacks:**
-
-* **Concept:** A stack follows **LIFO (Last In First Out)**, like a stack of plates. The last plate added is the first one you can remove.
-
-* **Diagram:**
-
-Imagine a vertical stack of plates:
-
+## Instruction given:
+* To use the following data structures for this project, and to also include them in the header file.
 ```
-+-----> (Top)  <- Newest element
-| Plate 3
-| Plate 2
-| Plate 1 (Bottom) <- Oldest element
-+----->
+/**
+ * struct stack_s - doubly linked list representation of a stack (or queue)
+ * @n: integer
+ * @prev: points to the previous element of the stack (or queue)
+ * @next: points to the next element of the stack (or queue)
+ *
+ * Description: doubly linked list node structure
+ * for stack, queues, LIFO, FIFO
+ */
+typedef struct stack_s
+{
+        int n;
+        struct stack_s *prev;
+        struct stack_s *next;
+} stack_t;
 ```
-
-* **Operations:**
-    * **Push:** Add an element to the "top" of the stack.
-    * **Pop:** Remove the element from the "top" of the stack.
-
-* **C Implementation:** Stacks can be implemented using arrays or linked lists. Here's a simplified example (assuming an array):
-
-```c
-#define MAX_SIZE 100
-
-int stack[MAX_SIZE];
-int top = -1; // Initially stack is empty
-
-void push(int data) {
-  if (top == MAX_SIZE - 1) {
-    printf("Stack Overflow\n");
-  } else {
-    stack[++top] = data;
-  }
-}
-
-int pop() {
-  if (top == -1) {
-    printf("Stack Underflow\n");
-    return -1;
-  } else {
-    return stack[top--];
-  }
-}
+```
+/**
+ * struct instruction_s - opcode and its function
+ * @opcode: the opcode
+ * @f: function to handle the opcode
+ *
+ * Description: opcode and its function
+ * for stack, queues, LIFO, FIFO
+ */
+typedef struct instruction_s
+{
+        char *opcode;
+        void (*f)(stack_t **stack, unsigned int line_number);
+} instruction_t;
 ```
 
-**Queues:**
+## List of files/Descriptions:
+| S/N   |   Files      		|      Description     |
+|:-----:|--------------------:|--------------------|
+|  1.   |                      |              |
+|  2.   |		|			|
+|  3.   |		|		|
+|  4.   |		|			|
+|  5.   |		|		|
 
-* **Concept:** A queue follows **FIFO (First In First Out)**, like a line at a store. The first person in line gets served first.
+## Compilation & Output
+* These codes were compiled using: ```gcc -Wall -Werror -Wextra -pedantic -std=c89 *.c -o monty```
+* Any output must be printed on ```stdout```
+* Any error message must be printed on ```stderr```
 
-* **Diagram:**
-
-Imagine a line of people waiting:
-
+## Examples
 ```
-       (Front)  -> Person who came first
-Person 3  ->
-Person 2  ->
-Person 1 (Rear)  <- Person who came last
+julien@ubuntu:~/monty$ cat -e bytecodes/000.m
+push 0$
+push 1$
+push 2$
+  push 3$
+                   pall    $
+push 4$
+    push 5    $
+      push    6        $
+pall$
+julien@ubuntu:~/monty$
 ```
-
-* **Operations:**
-    * **Enqueue:** Add an element to the "back" (rear) of the queue.
-    * **Dequeue:** Remove the element from the "front" of the queue.
-
-* **C Implementation:** Similar to stacks, queues can be implemented using arrays or linked lists. Here's a simplified example (assuming an array):
-
-```c
-#define MAX_SIZE 100
-
-int queue[MAX_SIZE];
-int front = -1, rear = -1; // Initially queue is empty
-
-void enqueue(int data) {
-  if (rear == MAX_SIZE - 1) {
-    printf("Queue Overflow\n");
-  } else {
-    if (front == -1) {
-      front = 0;
-    }
-    queue[++rear] = data;
-  }
-}
-
-int dequeue() {
-  if (front == -1 || front > rear) {
-    printf("Queue Underflow\n");
-    return -1;
-  } else {
-    int data = queue[front];
-    if (front == rear) {
-      front = rear = -1; // Reset if only one element
-    } else {
-      front++;
-    }
-    return data;
-  }
-}
+Monty byte code files can contain blank lines (empty or made of spaces only, and any additional text after the opcode or its required argument is not taken into account:
 ```
+julien@ubuntu:~/monty$ cat -e bytecodes/001.m
+push 0 Push 0 onto the stack$
+push 1 Push 1 onto the stack$
+$
+push 2$
+  push 3$
+                   pall    $
+$
+$
+                           $
+push 4$
+$
+    push 5    $
+      push    6        $
+$
+pall This is the end of our program. Monty is awesome!$
+julien@ubuntu:~/monty$
+```
+* Some examples of using monty and its console output.
 
-**Choosing Between Stacks and Queues:**
+|                        Example #1                      |                    Example #2                   |                      Example #3                           |
+|:-------------------------------------------------------|:------------------------------------------------|:----------------------------------------------------------|
+| ~/monty$ `cat -e bytecodes/00.m` <br> push 1$ <br> push 2$ <br> push 3$ <br> pall$ <br> ~/monty$ `./monty bytecodes/00.m` <br> 3 <br> 2 <br> 1  | ~/monty$ `cat bytecodes/07.m`  <br> push 1 <br> push 2 <br> push 3 <br> pall <br> pop <br> pall <br> pop <br> pall <br> pop <br> pall <br>  ~/monty$ `./monty bytecodes/07.m`  <br> 3 <br> 2 <br> 1 <br> 2 <br> 1 <br> 1 | ~/monty$ `cat bytecodes/09.m` <br> push 1 <br> push 2 <br> push 3 <br> pall <br> swap <br> pall <br> ~/monty$ `./monty bytecodes/09.m` <br> 3 <br> 2 <br> 1 <br> 2 <br> 3 <br> 1 |
 
-Remember, the choice depends on your program's needs:
-
-* Use a stack for LIFO operations (undo/redo, function calls).
-* Use a queue for FIFO operations (processing tasks, waiting lines).
-
-I hope this explanation with pictures and diagrams helps you understand stacks and queues in C better!
+## Authors/Collaborators
+[Okpara Onyedikachi](https://github.com/Dikachis/monty/) || [Duff Iniobong](https://github.com/Duffigoogle/monty/)
